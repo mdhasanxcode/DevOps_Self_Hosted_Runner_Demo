@@ -10,7 +10,8 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 22
-        run: npm ci
+      
+      - run: npm ci
       
       - name: test applicaiton
         run: npm run check
