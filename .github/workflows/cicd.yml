@@ -1,0 +1,29 @@
+name: CICD
+on: [push]
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: npm install
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      
+      - run: npm ci
+      
+      - name: test applicaiton
+        run: npm run check
+
+
+
+  Deploy:
+    needs:
+      - Test
+    runs-on: self-hosted
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: deploy
+        run: npm start
