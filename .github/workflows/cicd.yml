@@ -21,7 +21,7 @@ jobs:
               echo $(npm run check) > test_result.txt
 
       - name: upload aritifact
-        run: actions/upload-aritifact@v5
+        uses: actions/upload-aritifact@v5
         with:
           name: test_result
           path: ./test_result.txt
