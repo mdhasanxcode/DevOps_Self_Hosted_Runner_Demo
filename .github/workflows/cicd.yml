@@ -1,6 +1,8 @@
 name: CICD
 on: [push]
+
 jobs:
+
   Test:
     runs-on: ubuntu-latest
     steps:
@@ -14,8 +16,15 @@ jobs:
       - run: npm ci
       
       - name: test applicaiton
-        run: npm run check
+        run: | 
+              npm run check
+              echo $(npm run check) > test_result.txt
 
+      - name: upload aritifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test_result
+          path: ./test_result.txt
 
 
   Deploy:
