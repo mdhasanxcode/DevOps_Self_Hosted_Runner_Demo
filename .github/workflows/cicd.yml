@@ -17,14 +17,15 @@ jobs:
       
       - name: test applicaiton
         run: | 
-              npm run check
-              echo $(npm run check) > test_result.txt
+              set -o pipefail
+              mkdir -p artifacts
+              npm run check 2>&1 | tee artifacts/test_result.txt
 
       - name: upload aritifact
         uses: actions/upload-artifact@v4
         with:
           name: test_result
-          path: ./test_result.txt
+          path: artifacts/test_result.txt
 
 
   Deploy:
@@ -40,8 +41,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
          name: test_result
-         path: ./test_result.txt
-      - run: cat test_result
+         path: downloaded_artifacts
+      - run: cat downloaded_artifacts/test_result.txt
       
       - name: deploy
         run: npm start
